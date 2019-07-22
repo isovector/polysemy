@@ -195,7 +195,6 @@ or forget to handle an effect.
 Don't like helpful errors? That's OK too --- just flip the `error-messages` flag
 and enjoy the raw, unadulterated fury of the typesystem.
 
-
 ## Necessary Language Extensions
 
 You're going to want to stick all of this into your `package.yaml` file.
@@ -214,3 +213,19 @@ You're going to want to stick all of this into your `package.yaml` file.
     - TypeOperators
     - TypeFamilies
 ```
+
+## Want to experiment with Polysemy or base your project off of it?
+
+Use the stack template to initialize a project and get a project skeleton with:
+ * polysemy
+ * polysemy-plugin
+ * The example code
+ * Necessary GHC extensions turned on by default, besides `TemplateHaskell`
+
+To get started, run the following command:
+
+```sh
+stack new --resolver=nightly polysemy-base https://github.com/isovector/polysemy/raw/master/polysemy-template.hsfiles
+```
+For now, you will need to use one of the stackage nightly resolvers, but eventually `polysemy` will make its way
+into the LTS resolvers. You can substitute the `--resolver` and project name as needed.
