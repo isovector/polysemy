@@ -103,7 +103,8 @@ import Polysemy.Internal.Union
 --         catching = do
 --           modify (++"-catch")
 --           get
---     catch @String throwing (\ _ -> catching)
+--     -- Without `-fplugin=Polysemy.Plugin` you need `catch @String`
+--     catch throwing (\ _ -> catching)
 -- :}
 --
 -- when handling 'Polysemy.Error.Error' first, state is preserved after error
@@ -113,6 +114,7 @@ import Polysemy.Internal.Union
 --   example
 --     & runError
 --     & fmap (either id id)
+--     -- Without `-fplugin=Polysemy.Plugin` you need `evalState @String`
 --     & evalState ""
 --     & runM
 --     & (print =<<)
@@ -123,6 +125,7 @@ import Polysemy.Internal.Union
 --
 -- >>> :{
 --   example
+--     -- Without `-fplugin=Polysemy.Plugin` you need `evalState @String`
 --     & evalState ""
 --     & runError
 --     & fmap (either id id)
