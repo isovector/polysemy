@@ -1,10 +1,10 @@
 cabal-version: 2.0
 
--- This file has been generated from package.yaml by hpack version 0.33.0.
+-- This file has been generated from package.yaml by hpack version 0.34.2.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 1ca26628a20b44d39a0c528cd42cb065833e803157c026d19b1ecacc770f59dc
+-- hash: 89f099117ef4ce89f82d2ae5e474e77f2523a7b88185d4c354e7afb9397e0116
 
 name:           polysemy
 version:        1.3.0.0
@@ -73,6 +73,7 @@ library
       Polysemy.Internal.Union
       Polysemy.Internal.Writer
       Polysemy.IO
+      Polysemy.KVStore
       Polysemy.Law
       Polysemy.Membership
       Polysemy.NonDet
@@ -141,6 +142,7 @@ test-suite polysemy-test
       InspectorSpec
       InterceptSpec
       KnownRowSpec
+      KVStoreSpec
       LawsSpec
       OutputSpec
       ThEffectSpec
