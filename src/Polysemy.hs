@@ -107,6 +107,7 @@ module Polysemy
   , transform
 
     -- * Combinators for Interpreting Higher-Order Effects
+  , EffHandlerH
   , interpretNew
   , interceptNew
   , reinterpretNew
@@ -135,9 +136,15 @@ module Polysemy
     -- | When interpreting higher-order effects using 'interpretNew'
     -- and friends, you can't execute higher-order \"thunks\" given by
     -- the interpreted effect directly. Instead, these must be executed
-    -- using 'runH'.
+    -- using 'runH' or 'runH''.
+    --
+    -- These functions are enough for most purposes when using
+    -- 'interpretNew'. However, "Polysemy.Interpretation" offers
+    -- additional, more complicated features which are occassionally
+    -- needed.
   , RunH
   , runH
+  , runH'
 
     -- * Tactics
     -- | Higher-order effects need to explicitly thread /other effects'/ state
@@ -164,6 +171,7 @@ module Polysemy
 import Polysemy.Final
 import Polysemy.Internal
 import Polysemy.Internal.Combinators
+import Polysemy.Internal.Interpretation
 import Polysemy.Internal.Forklift
 import Polysemy.Internal.Kind
 import Polysemy.Internal.Tactics

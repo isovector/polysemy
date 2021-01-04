@@ -33,6 +33,7 @@ import           Data.Bifunctor (first)
 import           Data.Typeable
 import           Polysemy
 import           Polysemy.Final
+import           Polysemy.Interpretation
 import           Polysemy.Internal
 import           Polysemy.Internal.Union
 
@@ -217,21 +218,12 @@ mapError
   => (e1 -> e2)
   -> Sem (Error e1 ': r) a
   -> Sem r a
-mapError f = interpretH $ \case
+mapError f = interpretNew $ \case
   Throw e -> throw $ f e
-  Catch action handler -> do
-    a  <- runT action
-    h  <- bindT handler
-
-    mx <- raise $ runError a
-    case mx of
+  Catch action handler ->
+    runError (runH' action) >>= \case
       Right x -> pure x
-      Left e -> do
-        istate <- getInitialStateT
-        mx' <- raise $ runError $ h $ e <$ istate
-        case mx' of
-          Right x -> pure x
-          Left e' -> throw $ f e'
+      Left e  -> runH (handler e)
 {-# INLINE mapError #-}
 
 
@@ -318,13 +310,12 @@ runErrorAsExc
     => (∀ x. Sem r x -> IO x)
     -> Sem (Error e ': r) a
     -> Sem r a
-runErrorAsExc lower = interpretH $ \case
+runErrorAsExc lower = interpretNew $ \case
   Throw e -> embed $ X.throwIO $ WrappedExc e
   Catch main handle -> do
-    is <- getInitialStateT
-    m  <- runT main
-    h  <- bindT handle
-    let runIt = lower . runErrorAsExc lower
-    embed $ X.catch (runIt m) $ \(se :: WrappedExc e) ->
-      runIt $ h $ unwrapExc se <$ is
+    Processor pr  <- getProcessorH
+    let runIt = lower . pr
+    ta <- embed $ X.catch (runIt main) $ \(se :: WrappedExc e) ->
+      runIt $ handle $ unwrapExc se
+    restoreH ta
 {-# INLINE runErrorAsExc #-}
