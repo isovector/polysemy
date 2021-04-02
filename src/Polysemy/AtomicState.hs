@@ -186,7 +186,7 @@ runAtomicStateLocal s =
 {-# INLINE runAtomicStateLocal #-}
 
 ------------------------------------------------------------------------------
--- | Run an 'AtomicState' with local state semantics, discarding
+-- | Evaluate an 'AtomicState' with local state semantics, discarding
 -- the notion of atomicity, by transforming it into 'State' and running it
 -- with the provided initial state.
 evalAtomicStateLocal :: s
@@ -197,7 +197,7 @@ evalAtomicStateLocal s =
 {-# INLINE evalAtomicStateLocal #-}
 
 ------------------------------------------------------------------------------
--- | Run an 'AtomicState' with local state semantics, discarding
+-- | Execute an 'AtomicState' with local state semantics, discarding
 -- the notion of atomicity, by transforming it into 'State' and running it
 -- with the provided initial state.
 execAtomicStateLocal :: s
