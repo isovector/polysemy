@@ -1,0 +1,10 @@
+shell:   true
+image:   nixos/20.09
+sources: [https://github.com/polysemy-research/polysemy]
+repositories:
+  nixos: https://nixos.org/channels/nixos-20.09
+packages:
+- nixos.haskell.packages.ghc8101.ghc
+- nixos.haskell.packages.ghc8101.cabal-install
+tasks:
+- ci: ./polysemy/ci.sh
